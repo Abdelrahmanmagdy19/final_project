@@ -19,7 +19,7 @@ class ProfileScreen extends StatelessWidget {
           String userName = 'Loading...';
           String profileImageUrl =
               'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww&fm=jpg&q=60&w=3000';
-          String? userRole;
+
           bool isLoading = false;
 
           if (state is ProfileLoading) {
@@ -28,7 +28,6 @@ class ProfileScreen extends StatelessWidget {
           } else if (state is ProfileLoaded) {
             userName = state.profile.name;
             profileImageUrl = state.profile.imageUrl;
-            userRole = state.profile.role;
           } else if (state is ProfileError) {
             return Center(child: Text('Error: ${state.message}'));
           }

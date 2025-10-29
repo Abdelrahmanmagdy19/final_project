@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "393967741671",
+    "project_id": "cure-linke",
+    "storage_bucket": "cure-linke.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393967741671:android:c04e2f4a33511778701042",
+        "android_client_info": {
+          "package_name": "com.example.cure_link"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD29RteQFXeUIyuJmZrkNVHgV-btiHSRO8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

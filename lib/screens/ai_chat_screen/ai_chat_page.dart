@@ -7,17 +7,17 @@ import 'package:image_picker/image_picker.dart';
 import '../../services/chat_ai_service.dart';
 import 'typing_indicator.dart';
 
-class ChatPage extends StatefulWidget {
+class AiChatPage extends StatefulWidget {
   final bool embedded;
   final VoidCallback? onClose;
 
-  const ChatPage({super.key, this.embedded = false, this.onClose});
+  const AiChatPage({super.key, this.embedded = false, this.onClose});
 
   @override
-  State<ChatPage> createState() => _ChatPageState();
+  State<AiChatPage> createState() => _AiChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
+class _AiChatPageState extends State<AiChatPage> {
   final TextEditingController _controller = TextEditingController();
   final TextEditingController _captionController = TextEditingController();
   final ScrollController _scroll = ScrollController();
@@ -405,19 +405,6 @@ class _ChatPageState extends State<ChatPage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          'AI Chat',
-          style: TextStyle(
-            color: AppColor.greenColor,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        iconTheme: IconThemeData(color: AppColor.greenColor),
-      ),
       body: SafeArea(child: content),
     );
   }

@@ -1,17 +1,15 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatAiService {
   final Dio _dio = Dio();
 
   Future<String> sendMessage(String message, {Uint8List? imageBytes}) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      final apiKey = prefs.getString('ai_api_key') ?? '';
-      final baseUrl = prefs.getString('ai_base_url') ?? '';
+      final apiKey = 'AIzaSyD046QSAkJKKs7DtneEkfWM_3UzZR-AdZg';
+      final baseUrl =
+          'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
       if (apiKey.isEmpty || baseUrl.isEmpty) {
         throw Exception('API key or base URL not set');
@@ -42,7 +40,6 @@ class ChatAiService {
         data: payload,
       );
 
-      // adapt to the expected response structure — keep safe access
       if (response.data != null &&
           response.data['candidates'] != null &&
           response.data['candidates'].isNotEmpty) {
@@ -56,9 +53,9 @@ class ChatAiService {
         }
       }
 
-      return 'لا يوجد رد من الخادم.';
+      return 'No valid response from AI service.';
     } catch (e) {
-      return 'حصل خطأ أثناء إرسال الرسالة.';
+      return 'Error occurred while sending the message.';
     }
   }
 }

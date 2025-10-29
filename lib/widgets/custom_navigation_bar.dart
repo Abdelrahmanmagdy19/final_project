@@ -1,7 +1,7 @@
+import 'package:cure_link/screens/ai_chat_screen/ai_chat_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:cure_link/screens/home_screen/home_screen.dart';
-import 'package:cure_link/screens/ai_chat_screen/ai_chat_screen.dart';
 import 'package:cure_link/screens/chat_screen/chat_screen.dart';
 import 'package:cure_link/screens/profile_screen/profile_screen.dart';
 import 'package:cure_link/utils/app_color.dart';
@@ -18,7 +18,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
 
   final List<Widget> _pages = const [
     HomeScreen(),
-    AiChatScreen(),
+    AiChatPage(),
     ChatScreen(),
     ProfileScreen(),
   ];

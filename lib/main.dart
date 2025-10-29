@@ -1,5 +1,6 @@
 import 'package:cure_link/firebase_options.dart';
 import 'package:cure_link/models/cubits/login_sigin_cubits/login_sigin_cubits.dart';
+import 'package:cure_link/models/cubits/profile_cubits/profile_cubit.dart';
 import 'package:cure_link/screens/home_onboarding_screen/home_boarding_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,10 @@ void main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => LoginSiginCubits())],
+      providers: [
+        BlocProvider(create: (context) => LoginSiginCubits()),
+        BlocProvider(create: (context) => ProfileCubit()),
+      ],
       child: const CureLink(),
     ),
   );

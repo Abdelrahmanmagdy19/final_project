@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cure_link/widgets/custom_show_snack_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cure_link/models/model/booking_data.dart';
 import 'package:cure_link/models/model/doctors_details_model.dart';
 import 'package:cure_link/utils/app_color.dart';
@@ -18,6 +21,101 @@ class AppointmentScreens extends StatelessWidget {
     required this.bookingDetails,
   });
 
+  Future<void> _bookAppointment(
+    BuildContext context,
+    String painText,
+    double total,
+  ) async {
+    try {
+      final currentUser = FirebaseAuth.instance.currentUser;
+
+      if (currentUser == null || currentUser.email == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.red,
+            content: Row(
+              children: [
+                Icon(Icons.error, color: Colors.white),
+                Text(
+                  'User not logged in. Please log in to book an appointment.',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            duration: Duration(seconds: 2),
+          ),
+        );
+        return;
+      }
+
+      final userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser.uid)
+          .get();
+
+      if (!context.mounted) return;
+
+      final String patientName = userDoc.exists
+          ? (userDoc.data()?['name'] ?? 'Patient Name N/A')
+          : 'Patient Name N/A';
+      final String patientImage = userDoc.exists
+          ? (userDoc.data()?['imageUrl'] ?? 'https://via.placeholder.com/150')
+          : 'https://via.placeholder.com/150';
+
+      final appointmentData = {
+        'doctorName': doctor.name ?? 'N/A',
+        'doctorSpecialization': doctor.specialty ?? 'N/A',
+        'doctorImage': doctor.image ?? '',
+        'doctorUid': doctor.uid ?? 'N/A',
+        'userName': patientName,
+        'userImage': patientImage,
+        'userUid': currentUser.uid,
+        'userEmail': currentUser.email,
+        'appointmentDate': bookingDetails.selectedDate ?? 'N/A',
+        'appointmentTime': bookingDetails.selectedTime ?? 'N/A',
+        'reason': painText,
+        'consultationPrice': doctor.price?.toString() ?? '0.0',
+        'adminFee': 15.0,
+        'totalPrice': total.toStringAsFixed(2),
+        'status': 'Confirmed',
+        'timestamp': FieldValue.serverTimestamp(),
+      };
+
+      await FirebaseFirestore.instance
+          .collection('Schedule')
+          .add(appointmentData);
+
+      if (!context.mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colors.green,
+          content: Row(
+            children: [
+              Icon(Icons.check_circle, color: Colors.white),
+
+              Text(
+                'Appointment booked successfully!',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    } catch (e) {
+      if (!context.mounted) return;
+
+      CustomShowSnackBar(
+        context: context,
+        message: 'Failed to book appointment. Check connection.',
+        seconds: 2,
+        backgroundColor: Colors.red,
+        iconData: Icons.error,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final String painText =
@@ -25,8 +123,8 @@ class AppointmentScreens extends StatelessWidget {
         ? 'You have to tell your pain'
         : bookingDetails.pain!;
     final double doctorPrice =
-        double.tryParse(doctor.price?.toString() ?? '') ?? 0.0;
-    final double adminFee = 15;
+        double.tryParse(doctor.price?.toString() ?? '0.0') ?? 0.0;
+    const double adminFee = 15;
     final double total = doctorPrice + adminFee;
 
     return Scaffold(
@@ -46,7 +144,7 @@ class AppointmentScreens extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     'Date',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
@@ -56,7 +154,7 @@ class AppointmentScreens extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   CustomIconContainer(
@@ -64,10 +162,10 @@ class AppointmentScreens extends StatelessWidget {
                     borderRadius: 50,
                     padding: 5,
                   ),
-                  SizedBox(width: 25.5),
+                  const SizedBox(width: 25.5),
                   Text(
                     "${bookingDetails.selectedDate ?? ''} | ${bookingDetails.selectedTime ?? ''}",
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Color(0xFF555555),
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
@@ -75,15 +173,15 @@ class AppointmentScreens extends StatelessWidget {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 13),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 13),
                 child: CustomDivider(),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Reson',
+                  const Text(
+                    'Reason',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   Text(
@@ -92,7 +190,7 @@ class AppointmentScreens extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   CustomIconContainer(
@@ -100,11 +198,11 @@ class AppointmentScreens extends StatelessWidget {
                     borderRadius: 50,
                     padding: 5,
                   ),
-                  SizedBox(width: 25.5),
+                  const SizedBox(width: 25.5),
                   Expanded(
                     child: Text(
                       painText,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color(0xFF555555),
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -113,11 +211,11 @@ class AppointmentScreens extends StatelessWidget {
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 13),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 13),
                 child: CustomDivider(),
               ),
-              Align(
+              const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
                   'Payment Detail',
@@ -128,19 +226,22 @@ class AppointmentScreens extends StatelessWidget {
                 price: "\$${doctor.price}",
                 text: 'Consultation',
               ),
-              CustomPaymentDetailsRow(price: '$adminFee', text: 'Admin Fee'),
-              CustomPaymentDetailsRow(price: '_', text: 'Aditional Discount'),
+              CustomPaymentDetailsRow(price: '\$$adminFee', text: 'Admin Fee'),
+              const CustomPaymentDetailsRow(
+                price: '_',
+                text: 'Aditional Discount',
+              ),
               CustomPaymentDetailsRow(
                 price: '\$${(total).toStringAsFixed(2)}',
                 text: 'Total',
                 color: AppColor.greenColor,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               CustomButton(
                 text: 'Booking',
                 buttonWidth: 192,
                 buttonHeight: 54,
-                onTap: () {},
+                onTap: () => _bookAppointment(context, painText, total),
               ),
             ],
           ),

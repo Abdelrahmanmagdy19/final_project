@@ -8,11 +8,17 @@ class CustomButton extends StatelessWidget {
     required this.buttonWidth,
     required this.buttonHeight,
     this.onTap,
+    this.buttonColor = AppColor.greenColor,
+    this.borderRadius = const BorderRadius.all(Radius.circular(32)),
+    this.textColor = Colors.white,
   });
   final String text;
   final double buttonWidth;
   final double buttonHeight;
   final void Function()? onTap;
+  final Color? buttonColor;
+  final BorderRadiusGeometry? borderRadius;
+  final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +30,10 @@ class CustomButton extends StatelessWidget {
         height: buttonHeight,
         padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         decoration: BoxDecoration(
-          color: AppColor.greenColor,
-          borderRadius: BorderRadius.circular(32),
+          color: buttonColor,
+          borderRadius: borderRadius,
         ),
-        child: Text(text, style: TextStyle(color: Colors.white, fontSize: 16)),
+        child: Text(text, style: TextStyle(color: textColor, fontSize: 16)),
       ),
     );
   }

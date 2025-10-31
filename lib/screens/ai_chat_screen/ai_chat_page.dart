@@ -380,8 +380,9 @@ class _AiChatPageState extends State<AiChatPage> {
               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
               itemCount: _messages.length + (_isTyping ? 1 : 0),
               itemBuilder: (context, index) {
-                if (_isTyping && index == _messages.length)
+                if (_isTyping && index == _messages.length) {
                   return _buildTyping();
+                }
                 final m = _messages[index];
                 return _buildBubble(
                   m['text'] as String?,

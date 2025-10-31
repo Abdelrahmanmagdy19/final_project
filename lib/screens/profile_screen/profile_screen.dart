@@ -1,5 +1,6 @@
 import 'package:cure_link/models/cubits/profile_cubits/profile_cubit.dart';
 import 'package:cure_link/models/cubits/profile_cubits/profile_state.dart';
+import 'package:cure_link/screens/Schedule_screen/schedule_screen.dart';
 import 'package:cure_link/screens/lets_get_started_screen/lets_get_started_screen.dart';
 import 'package:cure_link/widgets/custom_divider.dart';
 import 'package:cure_link/widgets/custom_row_profile_screen.dart';
@@ -83,9 +84,16 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         const CustomDivider(),
                         CustomRowProfileScreen(
-                          iconData: Icons.calendar_today_outlined,
-                          title: 'Appointment',
-                          onTap: () {},
+                          iconData: Icons.schedule_outlined,
+                          title: 'Schedule',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ScheduleScreen(),
+                              ),
+                            );
+                          },
                         ),
                         const CustomDivider(),
                         CustomRowProfileScreen(

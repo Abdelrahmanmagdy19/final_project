@@ -21,7 +21,7 @@ class CustomTopDoctorsContainerHomePage extends StatelessWidget {
         width: 130,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.grey.shade300),
+          border: Border.all(color: AppColor.lightGreyColor2),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),

@@ -14,35 +14,64 @@ class CustomListViewHealthArticle extends StatefulWidget {
 class _CustomListViewHealthArticleState
     extends State<CustomListViewHealthArticle> {
   List<HealthArticleModel> healthArticles = [];
-  bool isLoading = true;
+  bool isLoading = false;
+  int currentPage = 1;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     fetchArticles();
+    _scrollController.addListener(_onScroll);
   }
 
   Future<void> fetchArticles() async {
-    final articles = await HealthArticleService().fetchHealthArticles();
+    if (isLoading) return;
+    setState(() => isLoading = true);
+
+    final newArticles = await HealthArticleService().fetchHealthArticles(
+      page: currentPage,
+    );
+
     setState(() {
-      healthArticles = articles;
+      healthArticles.addAll(newArticles);
+      currentPage++;
       isLoading = false;
     });
   }
 
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent - 200 &&
+        !isLoading) {
+      fetchArticles();
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
+    if (healthArticles.isEmpty && isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
 
     return SizedBox(
       height: 200,
       child: ListView.separated(
+        controller: _scrollController,
         separatorBuilder: (context, index) => const SizedBox(width: 12),
         scrollDirection: Axis.horizontal,
-        itemCount: healthArticles.length,
+        itemCount: healthArticles.length + (isLoading ? 1 : 0),
         itemBuilder: (context, index) {
+          if (index == healthArticles.length) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
           return CustomHealthArticleHomePage(
             healthArticleModel: healthArticles[index],
           );

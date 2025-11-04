@@ -4,10 +4,17 @@ import 'package:cure_link/models/model/health_artilcle_model.dart';
 class HealthArticleService {
   final Dio _dio = Dio();
 
-  Future<List<HealthArticleModel>> fetchHealthArticles() async {
+  Future<List<HealthArticleModel>> fetchHealthArticles({int page = 1}) async {
     try {
       final response = await _dio.get(
-        'https://newsapi.org/v2/top-headlines?category=health&language=en&apiKey=f0aa326d8b584a5cba68fc2114d9087e',
+        'https://newsapi.org/v2/top-headlines',
+        queryParameters: {
+          'category': 'health',
+          'language': 'en',
+          'pageSize': 5, // عدد الأخبار في كل تحميل
+          'page': page,
+          'apiKey': 'f0aa326d8b584a5cba68fc2114d9087e',
+        },
       );
 
       if (response.statusCode == 200 && response.data['articles'] != null) {

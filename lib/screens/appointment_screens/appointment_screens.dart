@@ -1,89 +1,39 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cure_link/widgets/custom_show_snack_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cure_link/models/model/booking_data.dart';
-import 'package:cure_link/models/model/doctors_details_model.dart';
+import 'package:flutter/material.dart';
 import 'package:cure_link/utils/app_color.dart';
 import 'package:cure_link/widgets/custom_bottom.dart';
 import 'package:cure_link/widgets/custom_divider.dart';
 import 'package:cure_link/widgets/custom_icon_container.dart';
 import 'package:cure_link/widgets/custom_payment_details_row.dart';
 import 'package:cure_link/widgets/custom_top_doctor_page_container.dart';
-import 'package:flutter/material.dart';
+import 'package:cure_link/widgets/custom_show_snack_bar.dart';
+import 'package:cure_link/models/model/booking_data.dart';
+import 'package:cure_link/models/model/doctors_details_model.dart';
+import 'package:cure_link/services/appointment_service.dart';
 
-class AppointmentScreens extends StatelessWidget {
+class AppointmentScreen extends StatelessWidget {
   final DoctorsDetailsModel doctor;
   final BookingData bookingDetails;
 
-  const AppointmentScreens({
+  const AppointmentScreen({
     super.key,
     required this.doctor,
     required this.bookingDetails,
   });
 
-  Future<void> _bookAppointment(
+  Future<void> _handleBooking(
     BuildContext context,
-    String painText,
+    String reason,
     double total,
   ) async {
+    final appointmentService = AppointmentService();
+
     try {
-      final currentUser = FirebaseAuth.instance.currentUser;
-
-      if (currentUser == null || currentUser.email == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: Colors.red,
-            content: Row(
-              children: [
-                Icon(Icons.error, color: Colors.white),
-                Text(
-                  'User not logged in. Please log in to book an appointment.',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            duration: Duration(seconds: 2),
-          ),
-        );
-        return;
-      }
-
-      final userDoc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser.uid)
-          .get();
-
-      if (!context.mounted) return;
-
-      final String patientName = userDoc.exists
-          ? (userDoc.data()?['name'] ?? 'Patient Name N/A')
-          : 'Patient Name N/A';
-      final String patientImage = userDoc.exists
-          ? (userDoc.data()?['imageUrl'] ?? 'https://via.placeholder.com/150')
-          : 'https://via.placeholder.com/150';
-
-      final appointmentData = {
-        'doctorName': doctor.name ?? 'N/A',
-        'doctorSpecialization': doctor.specialty ?? 'N/A',
-        'doctorImage': doctor.image ?? '',
-        'doctorUid': doctor.uid ?? 'N/A',
-        'userName': patientName,
-        'userImage': patientImage,
-        'userUid': currentUser.uid,
-        'userEmail': currentUser.email,
-        'appointmentDate': bookingDetails.selectedDate ?? 'N/A',
-        'appointmentTime': bookingDetails.selectedTime ?? 'N/A',
-        'reason': painText,
-        'consultationPrice': doctor.price?.toString() ?? '0.0',
-        'adminFee': 15.0,
-        'totalPrice': total.toStringAsFixed(2),
-        'status': 'Confirmed',
-        'timestamp': FieldValue.serverTimestamp(),
-      };
-
-      await FirebaseFirestore.instance
-          .collection('Schedule')
-          .add(appointmentData);
+      await appointmentService.bookAppointment(
+        doctor: doctor,
+        booking: bookingDetails,
+        reason: reason,
+        total: total,
+      );
 
       if (!context.mounted) return;
 
@@ -93,7 +43,7 @@ class AppointmentScreens extends StatelessWidget {
           content: Row(
             children: [
               Icon(Icons.check_circle, color: Colors.white),
-
+              SizedBox(width: 8),
               Text(
                 'Appointment booked successfully!',
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
@@ -106,19 +56,38 @@ class AppointmentScreens extends StatelessWidget {
     } catch (e) {
       if (!context.mounted) return;
 
-      CustomShowSnackBar(
-        context: context,
-        message: 'Failed to book appointment. Check connection.',
-        seconds: 2,
-        backgroundColor: Colors.red,
-        iconData: Icons.error,
-      );
+      if (e.toString().contains('User not logged in')) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: Colors.red,
+            content: Row(
+              children: [
+                Icon(Icons.error, color: Colors.white),
+                SizedBox(width: 8),
+                Text(
+                  'User not logged in. Please log in to book an appointment.',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      } else {
+        CustomShowSnackBar(
+          context: context,
+          message: 'Failed to book appointment. Check connection.',
+          seconds: 2,
+          backgroundColor: Colors.red,
+          iconData: Icons.error,
+        );
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final String painText =
+    final String reason =
         (bookingDetails.pain == null || bookingDetails.pain!.isEmpty)
         ? 'You have to tell your pain'
         : bookingDetails.pain!;
@@ -136,85 +105,25 @@ class AppointmentScreens extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const EdgeInsets.all(16),
         child: SingleChildScrollView(
           child: Column(
             children: [
               CustomTopDoctorPageContainer(doctor: doctor, onTap: () {}),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Date',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Change',
-                    style: TextStyle(color: AppColor.darkGreyColor),
-                  ),
-                ],
-              ),
               const SizedBox(height: 10),
-              Row(
-                children: [
-                  CustomIconContainer(
-                    iconData: Icons.date_range,
-                    borderRadius: 50,
-                    padding: 5,
-                  ),
-                  const SizedBox(width: 25.5),
-                  Text(
+              _buildSection(
+                title: 'Date',
+                icon: Icons.date_range,
+                text:
                     "${bookingDetails.selectedDate ?? ''} | ${bookingDetails.selectedTime ?? ''}",
-                    style: const TextStyle(
-                      color: Color(0xFF555555),
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 13),
-                child: CustomDivider(),
+              const CustomDivider(),
+              _buildSection(
+                title: 'Reason',
+                icon: Icons.edit_document,
+                text: reason,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    'Reason',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Change',
-                    style: TextStyle(color: AppColor.darkGreyColor),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  CustomIconContainer(
-                    iconData: Icons.edit_document,
-                    borderRadius: 50,
-                    padding: 5,
-                  ),
-                  const SizedBox(width: 25.5),
-                  Expanded(
-                    child: Text(
-                      painText,
-                      style: const TextStyle(
-                        color: Color(0xFF555555),
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 13),
-                child: CustomDivider(),
-              ),
+              const CustomDivider(),
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -229,10 +138,10 @@ class AppointmentScreens extends StatelessWidget {
               CustomPaymentDetailsRow(price: '\$$adminFee', text: 'Admin Fee'),
               const CustomPaymentDetailsRow(
                 price: '_',
-                text: 'Aditional Discount',
+                text: 'Additional Discount',
               ),
               CustomPaymentDetailsRow(
-                price: '\$${(total).toStringAsFixed(2)}',
+                price: '\$${total.toStringAsFixed(2)}',
                 text: 'Total',
                 color: AppColor.greenColor,
               ),
@@ -241,12 +150,53 @@ class AppointmentScreens extends StatelessWidget {
                 text: 'Booking',
                 buttonWidth: 192,
                 buttonHeight: 54,
-                onTap: () => _bookAppointment(context, painText, total),
+                onTap: () => _handleBooking(context, reason, total),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildSection({
+    required String title,
+    required IconData icon,
+    required String text,
+  }) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            const Text(
+              'Change',
+              style: TextStyle(color: AppColor.darkGreyColor),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            CustomIconContainer(iconData: icon, borderRadius: 50, padding: 5),
+            const SizedBox(width: 25.5),
+            Expanded(
+              child: Text(
+                text,
+                style: const TextStyle(
+                  color: Color(0xFF555555),
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

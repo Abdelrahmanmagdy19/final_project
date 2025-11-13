@@ -1,4 +1,5 @@
 import 'package:cure_link/models/model/health_artilcle_model.dart';
+import 'package:cure_link/screens/health_artical_details.dart';
 import 'package:cure_link/utils/app_color.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,16 @@ class CustomHealthArticleHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        // Navigate to details page
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                HealthArticleDetails(healthArticleModel: healthArticleModel),
+          ),
+        );
+      },
       child: Container(
         width: 200,
         decoration: BoxDecoration(

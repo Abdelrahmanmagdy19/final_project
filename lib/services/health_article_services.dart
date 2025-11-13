@@ -11,7 +11,7 @@ class HealthArticleService {
         queryParameters: {
           'category': 'health',
           'language': 'en',
-          'pageSize': 5, // عدد الأخبار في كل تحميل
+          'pageSize': 5,
           'page': page,
           'apiKey': 'f0aa326d8b584a5cba68fc2114d9087e',
         },
@@ -22,6 +22,13 @@ class HealthArticleService {
         return articlesData.map((element) {
           return HealthArticleModel(
             title: element['title'] ?? 'No Title',
+            author: element['author'] ?? 'Unknown',
+            content: element['content'] ?? 'No Content',
+            url: element['url'] ?? '',
+            description: element['description'] ?? 'No description',
+            publishedAt: DateTime.parse(
+              element['publishedAt'] ?? DateTime.now().toString(),
+            ),
             imageUrl:
                 element['urlToImage'] ??
                 'https://img.freepik.com/free-vector/medical-healthcare-concept-illustration_114360-6261.jpg',

@@ -40,7 +40,7 @@ class _HealthArticleDetailsState extends State<HealthArticleDetails> {
             _buildTitle(article.title),
             const SizedBox(height: 12),
             _buildAuthorAndDate(article.author, article.publishedAt),
-            const SizedBox(height: 25),
+            const SizedBox(height: 12),
             _buildContent(content, isContentLong),
             if (hasFullArticle) ...[
               const SizedBox(height: 10),
@@ -104,30 +104,34 @@ class _HealthArticleDetailsState extends State<HealthArticleDetails> {
     ),
   );
 
-  Widget _buildAuthorAndDate(String author, DateTime date) => Row(
-    children: [
-      const Icon(Icons.person_outline, size: 16, color: Colors.grey),
-      const SizedBox(width: 6),
-      Text(
-        author,
-        style: TextStyle(
-          fontSize: 14,
-          color: AppColor.darkGreyColor2,
-          fontFamily: 'inter',
+  Widget _buildAuthorAndDate(String author, DateTime date) => SizedBox(
+    height: 25,
+    child: ListView(
+      scrollDirection: Axis.horizontal,
+      children: [
+        const Icon(Icons.person_outline, size: 16, color: Colors.grey),
+        const SizedBox(width: 6),
+        Text(
+          author,
+          style: TextStyle(
+            fontSize: 14,
+            color: AppColor.darkGreyColor2,
+            fontFamily: 'inter',
+          ),
         ),
-      ),
-      const SizedBox(width: 15),
-      const Icon(Icons.calendar_today_outlined, size: 16, color: Colors.grey),
-      const SizedBox(width: 6),
-      Text(
-        _formatDate(date),
-        style: TextStyle(
-          fontSize: 14,
-          color: AppColor.darkGreyColor2,
-          fontFamily: 'inter',
+        const SizedBox(width: 15),
+        const Icon(Icons.calendar_today_outlined, size: 16, color: Colors.grey),
+        const SizedBox(width: 6),
+        Text(
+          _formatDate(date),
+          style: TextStyle(
+            fontSize: 14,
+            color: AppColor.darkGreyColor2,
+            fontFamily: 'inter',
+          ),
         ),
-      ),
-    ],
+      ],
+    ),
   );
 
   Widget _buildContent(String content, bool isContentLong) => Column(

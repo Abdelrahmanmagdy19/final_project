@@ -26,6 +26,7 @@ class CustomTopDoctorsContainerHomePage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 10),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SizedBox(height: 4),
               topDoctorsModel?.image != null

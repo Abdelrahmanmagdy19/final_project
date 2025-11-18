@@ -1,3 +1,4 @@
+import 'package:cure_link/screens/doctor_screen/doctor_screen.dart';
 import 'package:cure_link/utils/app_color.dart';
 import 'package:cure_link/utils/app_icons.dart';
 import 'package:cure_link/widgets/custom_container_search.dart';
@@ -15,6 +16,12 @@ class CustomRowContainerSearch extends StatelessWidget {
         CustomContainerSearch(
           icons: SvgPicture.asset(AppIcons.doctor, fit: BoxFit.none),
           title: 'Doctor',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DoctorScreen()),
+            );
+          },
         ),
         SizedBox(width: 16),
         CustomContainerSearch(

@@ -5,23 +5,25 @@ class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
     required this.hintText,
-    required this.prefixIcon,
+    this.prefixIcon,
     this.controller,
     this.suffixIcon,
     this.obscureText,
     this.validator,
     this.maxLines = 1,
+    this.onFieldSubmitted,
     this.onSaved,
     this.keyboardType,
   });
   final String hintText;
   final TextEditingController? controller;
-  final Widget prefixIcon;
+  final Widget? prefixIcon;
   final Widget? suffixIcon;
   final bool? obscureText;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
   final int? maxLines;
+  final void Function(String)? onFieldSubmitted;
   final void Function(String?)? onSaved;
   @override
   Widget build(BuildContext context) {
@@ -31,6 +33,7 @@ class CustomTextFormField extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: obscureText ?? false,
       validator: validator,
+      onFieldSubmitted: onFieldSubmitted,
       maxLines: maxLines,
       decoration: InputDecoration(
         hintText: hintText,

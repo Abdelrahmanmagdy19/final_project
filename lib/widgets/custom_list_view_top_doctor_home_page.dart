@@ -9,7 +9,7 @@ class CustomListViewTopDoctorHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 173,
+      height: 183,
       child: FutureBuilder<List<DoctorsDetailsModel>>(
         future: GetDataFromFirebaseTopDoctor().fetchTopDoctors(),
         builder: (context, snapshot) {

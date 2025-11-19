@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:cure_link/models/model/user_profile.dart';
+import 'package:cure_link/shared/models/user_profile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

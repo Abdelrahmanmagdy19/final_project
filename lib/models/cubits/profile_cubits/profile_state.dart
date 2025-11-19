@@ -1,4 +1,4 @@
-import 'package:cure_link/models/model/user_profile.dart';
+import 'package:cure_link/shared/models/user_profile.dart';
 import 'package:flutter/material.dart';
 
 @immutable

@@ -1,4 +1,5 @@
 import 'package:cure_link/models/cubits/login_sigin_cubits/login_sigin_cubits_state.dart';
+import 'package:cure_link/shared/services/user_role_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,8 +7,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class LoginSiginCubits extends Cubit<LoginSiginCubitsState> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final UserRoleService _roleService;
 
-  LoginSiginCubits() : super(LoginSiginCubitsInitial());
+  LoginSiginCubits({UserRoleService? roleService})
+      : _roleService = roleService ?? UserRoleService(),
+        super(LoginSiginCubitsInitial());
 
   Future<void> loginWitheFirebase(String email, String password) async {
     emit(LoginSiginCubitsLoading());
@@ -17,8 +21,11 @@ class LoginSiginCubits extends Cubit<LoginSiginCubitsState> {
         password: password,
       );
 
-      if (userCredential.user != null) {
-        emit(LoginSiginCubitsSuccess(userCredential.user));
+      final user = userCredential.user;
+
+      if (user != null) {
+        final role = await _roleService.fetchUserRole(user.uid);
+        emit(LoginSiginCubitsSuccess(user, role));
       } else {
         emit(LoginSiginCubitsFailure('Sign-in failed'));
       }
@@ -94,6 +101,8 @@ class LoginSiginCubits extends Cubit<LoginSiginCubitsState> {
               .collection(collectionPath)
               .doc(user.uid)
               .set(baseData);
+
+          await _roleService.persistUserRole(user.uid, role);
         } catch (e) {
           // If Firestore write fails, delete the Auth user
           await user.delete();
@@ -107,7 +116,7 @@ class LoginSiginCubits extends Cubit<LoginSiginCubitsState> {
 
         await user.reload();
 
-        emit(LoginSiginCubitsSuccess(_auth.currentUser));
+        emit(LoginSiginCubitsSuccess(_auth.currentUser, role));
       } else {
         emit(
           LoginSiginCubitsFailure('Registration failed: User object is null.'),

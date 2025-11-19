@@ -8,7 +8,9 @@ class LoginSiginCubitsLoading extends LoginSiginCubitsState {}
 
 class LoginSiginCubitsSuccess extends LoginSiginCubitsState {
   final User? user;
-  LoginSiginCubitsSuccess(this.user);
+  final String role;
+
+  LoginSiginCubitsSuccess(this.user, this.role);
 }
 
 class LoginSiginCubitsFailure extends LoginSiginCubitsState {

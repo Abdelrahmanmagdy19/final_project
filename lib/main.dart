@@ -1,10 +1,10 @@
-import 'package:cure_link/firebase_options.dart';
 import 'package:cure_link/models/cubits/login_sigin_cubits/login_sigin_cubits.dart';
 import 'package:cure_link/models/cubits/profile_cubits/profile_cubit.dart';
-import 'package:cure_link/screens/home_onboarding_screen/home_boarding_screen.dart';
+import 'package:cure_link/shared/navigation/auth_redirector.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,9 +25,9 @@ class CureLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeOnBoardingScreen(),
+      home: AuthRedirector(),
     );
   }
 }

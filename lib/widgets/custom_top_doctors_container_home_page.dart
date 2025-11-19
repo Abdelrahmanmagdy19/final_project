@@ -1,5 +1,5 @@
-import 'package:cure_link/models/model/doctors_details_model.dart';
-import 'package:cure_link/screens/doctor_details_screen/doctor_details_screen.dart';
+import 'package:cure_link/shared/models/doctors_details_model.dart';
+import 'package:cure_link/features/patient/screens/doctor_details_screen/doctor_details_screen.dart';
 import 'package:cure_link/utils/app_color.dart';
 import 'package:flutter/material.dart';
 

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cure_link/models/model/doctors_details_model.dart';
+import 'package:cure_link/shared/models/doctors_details_model.dart';
 
 class GetDataFromFirebaseTopDoctor {
   Future<List<DoctorsDetailsModel>> fetchTopDoctors() async {

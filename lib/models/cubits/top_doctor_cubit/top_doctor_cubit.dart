@@ -1,5 +1,5 @@
 import 'package:cure_link/models/cubits/top_doctor_cubit/top_doctor_cubit_state.dart';
-import 'package:cure_link/models/model/doctors_details_model.dart';
+import 'package:cure_link/shared/models/doctors_details_model.dart';
 import 'package:cure_link/services/get_data_from_firebase_top_doctor.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

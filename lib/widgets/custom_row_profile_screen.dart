@@ -18,28 +18,28 @@ class CustomRowProfileScreen extends StatelessWidget {
   final Color? iconColor;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-      child: Row(
-        children: [
-          CustomIconContainer(
-            iconData: iconData,
-            borderRadius: 50,
-            padding: 9,
-            backgroundColor: backgroundColor,
-            iconColor: iconColor,
-          ),
-          SizedBox(width: 16),
-          Text(
-            title,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          Spacer(),
-          GestureDetector(
-            onTap: onTap,
-            child: Icon(Icons.arrow_forward_ios, size: 16),
-          ),
-        ],
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+        child: Row(
+          children: [
+            CustomIconContainer(
+              iconData: iconData,
+              borderRadius: 50,
+              padding: 9,
+              backgroundColor: backgroundColor,
+              iconColor: iconColor,
+            ),
+            SizedBox(width: 16),
+            Text(
+              title,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            Spacer(),
+            Icon(Icons.arrow_forward_ios, size: 16),
+          ],
+        ),
       ),
     );
   }

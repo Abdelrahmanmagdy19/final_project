@@ -44,7 +44,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
               ],
             ),
-            backgroundColor: Colors.green,
+            backgroundColor: AppColor.greenColor,
           ),
         );
         Navigator.pop(context);
@@ -123,7 +123,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
               const SizedBox(height: 8),
               Text(
-                'Enter your email, we will send you confirmation code',
+                'Enter your email, we will send you a link to reset your password.',
                 style: TextStyle(
                   fontFamily: 'inter',
                   fontSize: 16,

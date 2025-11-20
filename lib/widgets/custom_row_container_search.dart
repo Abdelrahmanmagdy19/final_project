@@ -1,4 +1,5 @@
 import 'package:cure_link/screens/doctor_screen/doctor_screen.dart';
+import 'package:cure_link/screens/pharmacy_screen/pharmacy_screen.dart';
 import 'package:cure_link/utils/app_color.dart';
 import 'package:cure_link/utils/app_icons.dart';
 import 'package:cure_link/widgets/custom_container_search.dart';
@@ -30,6 +31,10 @@ class CustomRowContainerSearch extends StatelessWidget {
             color: AppColor.greenColor,
           ),
           title: 'pharmacy',
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PharmacyScreen()),
+          ),
         ),
         SizedBox(width: 16),
         CustomContainerSearch(

@@ -1,5 +1,6 @@
 import 'package:cure_link/cubits/login_sigin_cubits/login_sigin_cubits.dart';
 import 'package:cure_link/cubits/login_sigin_cubits/login_sigin_cubits_state.dart';
+import 'package:cure_link/screens/foget_password_screens/forgot_password_screen.dart';
 import 'package:cure_link/screens/sigin_screen/sig_in_screen.dart';
 import 'package:cure_link/utils/app_color.dart';
 import 'package:cure_link/utils/app_icons.dart';
@@ -127,11 +128,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(height: 8),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: AppColor.greenColor),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ForgotPasswordScreen(),
+                        ),
+                      );
+                    },
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        'Forgot Password?',
+                        style: TextStyle(color: AppColor.greenColor),
+                      ),
                     ),
                   ),
                   SizedBox(height: 20),

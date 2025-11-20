@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cure_link/models/model/booking_data.dart';
-import 'package:cure_link/models/model/doctors_details_model.dart';
+import 'package:cure_link/models/booking_data.dart';
+import 'package:cure_link/models/doctors_details_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AppointmentService {

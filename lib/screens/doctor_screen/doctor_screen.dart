@@ -1,4 +1,4 @@
-import 'package:cure_link/models/model/doctors_details_model.dart';
+import 'package:cure_link/models/doctors_details_model.dart';
 import 'package:cure_link/screens/doctor_details_screen/doctor_details_screen.dart';
 import 'package:cure_link/services/get_data_from_firebase_top_doctor.dart';
 import 'package:cure_link/widgets/custom_text_from_field.dart';
@@ -142,17 +142,20 @@ class _DoctorScreenState extends State<DoctorScreen> {
                   itemCount: _filteredDoctors.length,
                   itemBuilder: (context, index) {
                     final doctor = _filteredDoctors[index];
-                    return CustomTopDoctorPageContainer(
-                      doctor: doctor,
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                DoctorDetailsScreen(doctor: doctor),
-                          ),
-                        );
-                      },
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: CustomTopDoctorPageContainer(
+                        doctor: doctor,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  DoctorDetailsScreen(doctor: doctor),
+                            ),
+                          );
+                        },
+                      ),
                     );
                   },
                 );

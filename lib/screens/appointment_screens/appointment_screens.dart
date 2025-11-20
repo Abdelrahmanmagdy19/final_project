@@ -6,8 +6,8 @@ import 'package:cure_link/widgets/custom_icon_container.dart';
 import 'package:cure_link/widgets/custom_payment_details_row.dart';
 import 'package:cure_link/widgets/custom_top_doctor_page_container.dart';
 import 'package:cure_link/widgets/custom_show_snack_bar.dart';
-import 'package:cure_link/models/model/booking_data.dart';
-import 'package:cure_link/models/model/doctors_details_model.dart';
+import 'package:cure_link/models/booking_data.dart';
+import 'package:cure_link/models/doctors_details_model.dart';
 import 'package:cure_link/services/appointment_service.dart';
 
 class AppointmentScreen extends StatelessWidget {

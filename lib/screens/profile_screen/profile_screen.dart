@@ -1,5 +1,5 @@
-import 'package:cure_link/models/cubits/profile_cubits/profile_cubit.dart';
-import 'package:cure_link/models/cubits/profile_cubits/profile_state.dart';
+import 'package:cure_link/cubits/profile_cubits/profile_cubit.dart';
+import 'package:cure_link/cubits/profile_cubits/profile_state.dart';
 import 'package:cure_link/screens/Schedule_screen/schedule_screen.dart';
 import 'package:cure_link/screens/lets_get_started_screen/lets_get_started_screen.dart';
 import 'package:cure_link/widgets/custom_divider.dart';

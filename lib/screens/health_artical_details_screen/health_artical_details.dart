@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:cure_link/models/model/health_artilcle_model.dart';
+import 'package:cure_link/models/health_artilcle_model.dart';
 import 'package:cure_link/utils/app_color.dart';
 
 class HealthArticleDetails extends StatefulWidget {

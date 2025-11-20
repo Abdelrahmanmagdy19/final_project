@@ -1,5 +1,5 @@
-import 'package:cure_link/models/model/message_model.dart';
-import 'package:cure_link/models/model/user_chat_model.dart';
+import 'package:cure_link/models/message_model.dart';
+import 'package:cure_link/models/user_chat_model.dart';
 import 'package:cure_link/services/message_chat_service.dart';
 import 'package:cure_link/widgets/custom_message_bubble.dart';
 import 'package:flutter/material.dart';

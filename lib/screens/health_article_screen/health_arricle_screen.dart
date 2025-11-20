@@ -1,7 +1,7 @@
 import 'package:cure_link/screens/health_artical_details_screen/health_artical_details.dart';
 import 'package:cure_link/services/health_article_services.dart';
 import 'package:flutter/material.dart';
-import 'package:cure_link/models/model/health_artilcle_model.dart';
+import 'package:cure_link/models/health_artilcle_model.dart';
 
 class HealthArticleScreen extends StatefulWidget {
   const HealthArticleScreen({super.key});

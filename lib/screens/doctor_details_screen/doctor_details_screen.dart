@@ -1,5 +1,5 @@
-import 'package:cure_link/models/model/booking_data.dart';
-import 'package:cure_link/models/model/doctors_details_model.dart';
+import 'package:cure_link/models/booking_data.dart';
+import 'package:cure_link/models/doctors_details_model.dart';
 import 'package:cure_link/screens/appointment_screens/appointment_screens.dart';
 import 'package:cure_link/widgets/custom_bottom.dart';
 import 'package:cure_link/widgets/custom_divider.dart';

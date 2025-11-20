@@ -1,4 +1,4 @@
-import 'package:cure_link/models/cubits/top_doctor_cubit/top_doctor_cubit.dart';
+import 'package:cure_link/cubits/top_doctor_cubit/top_doctor_cubit.dart';
 import 'package:cure_link/screens/health_article_screen/health_arricle_screen.dart';
 import 'package:cure_link/screens/top_doctor_screen/top_doctor_screen.dart';
 import 'package:cure_link/utils/app_color.dart';

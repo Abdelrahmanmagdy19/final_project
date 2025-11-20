@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:cure_link/models/model/health_artilcle_model.dart';
+import 'package:cure_link/models/health_artilcle_model.dart';
 
 class HealthArticleService {
   final Dio _dio = Dio();

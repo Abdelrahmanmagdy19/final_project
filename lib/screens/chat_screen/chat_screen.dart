@@ -1,4 +1,4 @@
-import 'package:cure_link/models/model/user_chat_model.dart';
+import 'package:cure_link/models/user_chat_model.dart';
 import 'package:cure_link/widgets/custom_user_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

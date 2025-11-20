@@ -1,4 +1,4 @@
-import 'package:cure_link/models/model/doctors_details_model.dart';
+import 'package:cure_link/models/doctors_details_model.dart';
 import 'package:cure_link/services/get_data_from_firebase_top_doctor.dart';
 import 'package:cure_link/widgets/custom_top_doctors_container_home_page.dart';
 import 'package:flutter/material.dart';

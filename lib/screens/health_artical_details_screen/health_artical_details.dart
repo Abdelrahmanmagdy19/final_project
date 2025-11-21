@@ -1,7 +1,10 @@
+import 'package:cure_link/cubits/favorites_cubits/favorites_cubits_.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_bloc/flutter_bloc.dart'; // <--- (1) استيراد البلوك
 import 'package:cure_link/models/health_artilcle_model.dart';
 import 'package:cure_link/utils/app_color.dart';
+import 'package:cure_link/cubits/favorites_cubits/favorites_cubits_state.dart';
 
 class HealthArticleDetails extends StatefulWidget {
   const HealthArticleDetails({super.key, required this.healthArticleModel});
@@ -15,7 +18,6 @@ class HealthArticleDetails extends StatefulWidget {
 class _HealthArticleDetailsState extends State<HealthArticleDetails> {
   bool _isExpanded = false;
   final int _collapsedLines = 8;
-
   @override
   Widget build(BuildContext context) {
     final article = widget.healthArticleModel;
@@ -27,27 +29,61 @@ class _HealthArticleDetailsState extends State<HealthArticleDetails> {
     final bool isContentLong = content.length > 200;
     final bool hasFullArticle = article.url.isNotEmpty;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: _buildAppBar(context),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildImage(article.imageUrl),
-            const SizedBox(height: 25),
-            _buildTitle(article.title),
-            const SizedBox(height: 12),
-            _buildAuthorAndDate(article.author, article.publishedAt),
-            const SizedBox(height: 12),
-            _buildContent(content, isContentLong),
-            if (hasFullArticle) ...[
-              const SizedBox(height: 10),
-              _buildReadFullArticleButton(article.url),
+    return BlocListener<FavoritesCubits, FavoritesCubitsState>(
+      listener: (context, state) {
+        if (state is FavoritesCubitsSuccess) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: const Duration(seconds: 1),
+              content: Row(
+                children: [
+                  Icon(
+                    state.articles.contains(article)
+                        ? Icons.check
+                        : Icons.remove_circle_outline,
+                    color: Colors.white,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    state.articles.contains(article)
+                        ? 'Article added to favorites successfully!'
+                        : 'Article removed from favorites.',
+                  ),
+                ],
+              ),
+              backgroundColor: state.articles.contains(article)
+                  ? AppColor.greenColor
+                  : Colors.red,
+            ),
+          );
+        } else if (state is FavoritesCubitsError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Error: ${state.message}'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: _buildAppBar(context),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildImage(article.imageUrl),
+              const SizedBox(height: 25),
+              _buildTitle(article.title),
+              const SizedBox(height: 12),
+              _buildAuthorAndDate(article.author, article.publishedAt),
+              const SizedBox(height: 12),
+              _buildContent(content, isContentLong),
+              if (hasFullArticle) ...[const SizedBox(height: 10)],
+              if (hasFullArticle) _buildReadFullArticleButton(article.url),
             ],
-            const SizedBox(height: 30),
-          ],
+          ),
         ),
       ),
     );
@@ -56,14 +92,36 @@ class _HealthArticleDetailsState extends State<HealthArticleDetails> {
   AppBar _buildAppBar(BuildContext context) => AppBar(
     title: const Text(
       'Article Details',
-      style: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
-        color: Colors.black,
-        fontFamily: 'inter',
-      ),
+      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
     ),
     centerTitle: true,
+    actions: [
+      BlocBuilder<FavoritesCubits, FavoritesCubitsState>(
+        builder: (context, state) {
+          bool isFavorite = false;
+          if (state is FavoritesCubitsSuccess) {
+            isFavorite = state.articles.contains(widget.healthArticleModel);
+          }
+
+          return IconButton(
+            icon: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: isFavorite ? Colors.red : Colors.grey[700],
+            ),
+            onPressed: () {
+              final favoritesCubit = context.read<FavoritesCubits>();
+              if (isFavorite) {
+                favoritesCubit.removeArticleFromFavorites(
+                  widget.healthArticleModel,
+                );
+              } else {
+                favoritesCubit.addArticleToFavorites(widget.healthArticleModel);
+              }
+            },
+          );
+        },
+      ),
+    ],
   );
 
   Widget _buildImage(String imageUrl) => Container(
@@ -88,7 +146,7 @@ class _HealthArticleDetailsState extends State<HealthArticleDetails> {
         errorBuilder: (_, __, ___) => Container(
           height: 220,
           color: Colors.grey[200],
-          child: const Icon(Icons.broken_image, color: Colors.grey),
+          child: const Icon(Icons.broken_image, color: Colors.grey, size: 50),
         ),
       ),
     ),
@@ -180,7 +238,6 @@ class _HealthArticleDetailsState extends State<HealthArticleDetails> {
         ),
     ],
   );
-
   Widget _buildReadFullArticleButton(String url) => Center(
     child: TextButton.icon(
       onPressed: () async {
@@ -200,9 +257,6 @@ class _HealthArticleDetailsState extends State<HealthArticleDetails> {
       ),
     ),
   );
-
-  /// ------------------- Helpers -------------------
-
   String _formatDate(DateTime date) =>
       "${date.day.toString().padLeft(2, '0')}/"
       "${date.month.toString().padLeft(2, '0')}/"

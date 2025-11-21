@@ -1,6 +1,7 @@
 import 'package:cure_link/cubits/profile_cubits/profile_cubit.dart';
 import 'package:cure_link/cubits/profile_cubits/profile_state.dart';
 import 'package:cure_link/screens/Schedule_screen/schedule_screen.dart';
+import 'package:cure_link/screens/favorites_screen/favorites_screen.dart';
 import 'package:cure_link/screens/lets_get_started_screen/lets_get_started_screen.dart';
 import 'package:cure_link/screens/my_cart_screen/my_cart_screen.dart';
 import 'package:cure_link/widgets/custom_divider.dart';
@@ -81,7 +82,14 @@ class ProfileScreen extends StatelessWidget {
                         CustomRowProfileScreen(
                           iconData: Icons.favorite_border,
                           title: 'Favorites',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FavoritesScreen(),
+                              ),
+                            );
+                          },
                         ),
                         const CustomDivider(),
                         CustomRowProfileScreen(

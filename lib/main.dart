@@ -1,3 +1,4 @@
+import 'package:cure_link/cubits/favorites_cubits/favorites_cubits_.dart';
 import 'package:cure_link/firebase_options.dart';
 import 'package:cure_link/cubits/login_sigin_cubits/login_sigin_cubits.dart';
 import 'package:cure_link/cubits/profile_cubits/profile_cubit.dart';
@@ -12,6 +13,7 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => FavoritesCubits()),
         BlocProvider(create: (context) => LoginSiginCubits()),
         BlocProvider(create: (context) => ProfileCubit()),
       ],

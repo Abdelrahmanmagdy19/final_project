@@ -2,6 +2,7 @@ import 'package:cure_link/cubits/profile_cubits/profile_cubit.dart';
 import 'package:cure_link/cubits/profile_cubits/profile_state.dart';
 import 'package:cure_link/screens/Schedule_screen/schedule_screen.dart';
 import 'package:cure_link/screens/lets_get_started_screen/lets_get_started_screen.dart';
+import 'package:cure_link/screens/my_cart_screen/my_cart_screen.dart';
 import 'package:cure_link/widgets/custom_divider.dart';
 import 'package:cure_link/widgets/custom_row_profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -97,9 +98,16 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         const CustomDivider(),
                         CustomRowProfileScreen(
-                          iconData: Icons.payment_outlined,
-                          title: 'Payment Methods',
-                          onTap: () {},
+                          iconData: Icons.shopping_bag_outlined,
+                          title: 'My Cart',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MyCartScreen(),
+                              ),
+                            );
+                          },
                         ),
                         const CustomDivider(),
                         CustomRowProfileScreen(

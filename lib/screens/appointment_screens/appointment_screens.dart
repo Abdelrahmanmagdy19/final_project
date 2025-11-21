@@ -1,3 +1,4 @@
+import 'package:cure_link/widgets/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:cure_link/utils/app_color.dart';
 import 'package:cure_link/widgets/custom_bottom.dart';
@@ -36,10 +37,17 @@ class AppointmentScreen extends StatelessWidget {
       );
 
       if (!context.mounted) return;
+      Future.delayed(Duration(seconds: 2), () {
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const CustomNavigationBar()),
+          (route) => false,
+        );
+      });
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          backgroundColor: Colors.green,
+          backgroundColor: AppColor.greenColor,
           content: Row(
             children: [
               Icon(Icons.check_circle, color: Colors.white),

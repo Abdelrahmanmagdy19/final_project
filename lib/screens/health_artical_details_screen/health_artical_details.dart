@@ -39,7 +39,7 @@ class _HealthArticleDetailsState extends State<HealthArticleDetails> {
                 children: [
                   Icon(
                     state.articles.contains(article)
-                        ? Icons.check
+                        ? Icons.check_circle
                         : Icons.remove_circle_outline,
                     color: Colors.white,
                   ),

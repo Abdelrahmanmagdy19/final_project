@@ -33,6 +33,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<void> _loadProfile() async {
     final profile = await _chatService.fetchCurrentUserProfile();
+
+    if (!mounted) return;
+
     setState(() {
       _currentProfile = profile;
       _isProfileLoading = false;
@@ -42,6 +45,8 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<void> _searchUsers() async {
     final searchValue = _searchController.text.trim();
     if (searchValue.isEmpty) {
+      if (!mounted) return;
+
       setState(() {
         _isDisplayingSearchResults = false;
         _searchResults = [];
@@ -49,12 +54,16 @@ class _ChatScreenState extends State<ChatScreen> {
       return;
     }
 
+    if (!mounted) return;
+
     setState(() {
       _isLoading = true;
       _isDisplayingSearchResults = true;
     });
 
     final results = await _chatService.searchUsersByEmail(searchValue);
+
+    if (!mounted) return;
 
     setState(() {
       _searchResults = results;

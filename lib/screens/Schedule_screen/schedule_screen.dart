@@ -67,6 +67,52 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         .snapshots();
   }
 
+  Future<void> _cancelAppointment(String docId) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text('Cancel Appointment'),
+        content: const Text(
+          'Are you sure you want to cancel this appointment?',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('No'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Yes'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('Schedule')
+          .doc(docId)
+          .delete();
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Appointment cancelled'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to cancel appointment: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -237,6 +283,9 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                                     borderRadius: BorderRadius.circular(8),
                                     buttonColor: AppColor.lightGreenColor,
                                     textColor: Colors.black,
+                                    onTap: () async {
+                                      await _cancelAppointment(doc.id);
+                                    },
                                   ),
                                   CustomButton(
                                     text: 'Reschedule',

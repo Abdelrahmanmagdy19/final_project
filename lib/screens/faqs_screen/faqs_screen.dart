@@ -229,15 +229,11 @@ class _FaqsScreenState extends State<FaqsScreen> with TickerProviderStateMixin {
       appBar: AppBar(
         title: const Text(
           'FAQs',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        iconTheme: const IconThemeData(color: Colors.white),
+
         centerTitle: true,
-        backgroundColor: AppColor.greenColor,
+
         elevation: 0,
       ),
       body: SafeArea(

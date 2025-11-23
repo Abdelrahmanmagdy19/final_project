@@ -133,25 +133,16 @@ class ProfileScreen extends StatelessWidget {
                         ),
                         const CustomDivider(),
                         CustomRowProfileScreen(
-                          iconData: Icons.settings_outlined,
-                          title: 'Settings',
-                          onTap: () {},
-                        ),
-                        const CustomDivider(),
-                        CustomRowProfileScreen(
                           iconData: Icons.logout,
                           title: 'Log Out',
                           onTap: () async {
                             final route = MaterialPageRoute(
                               builder: (context) => const LetsGetStarted(),
                             );
-
                             await context.read<ProfileCubit>().logout();
-
                             if (!context.mounted) {
                               return;
                             }
-
                             Navigator.pushReplacement(context, route);
                           },
                           backgroundColor: Colors.red.shade100,

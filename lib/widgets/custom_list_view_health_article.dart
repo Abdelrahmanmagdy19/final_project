@@ -29,15 +29,20 @@ class _CustomListViewHealthArticleState
     if (isLoading) return;
     setState(() => isLoading = true);
 
-    final newArticles = await HealthArticleService().fetchHealthArticles(
-      page: currentPage,
-    );
-
-    setState(() {
-      healthArticles.addAll(newArticles);
-      currentPage++;
-      isLoading = false;
-    });
+    try {
+      final newArticles = await HealthArticleService().fetchHealthArticles(
+        page: currentPage,
+      );
+      if (!mounted) return; // guard against setState after dispose
+      setState(() {
+        healthArticles.addAll(newArticles);
+        currentPage++;
+        isLoading = false;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => isLoading = false);
+    }
   }
 
   void _onScroll() {
@@ -50,6 +55,7 @@ class _CustomListViewHealthArticleState
 
   @override
   void dispose() {
+    _scrollController.removeListener(_onScroll);
     _scrollController.dispose();
     super.dispose();
   }

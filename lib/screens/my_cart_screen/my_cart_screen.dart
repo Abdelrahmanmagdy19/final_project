@@ -196,7 +196,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
         ),
         child: Row(
           children: [
-            Image.asset(item.medicine.imagePathNote, width: 50, height: 50),
+            Image.network(item.medicine.imagePathNote, width: 50, height: 50),
             const SizedBox(width: 15),
             Expanded(
               child: Column(

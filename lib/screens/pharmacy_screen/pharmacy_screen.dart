@@ -1,6 +1,7 @@
 import 'package:cure_link/models/medicine_model.dart';
+import 'package:cure_link/screens/medicine_details_screen/medicine_details_screen.dart';
 import 'package:cure_link/utils/app_color.dart';
-import 'package:cure_link/widgets/custom_medicine_container.dart';
+import 'package:cure_link/widgets/custom_list_view_medicine.dart';
 import 'package:cure_link/widgets/custom_row_see_all_home_screen.dart';
 import 'package:cure_link/widgets/custom_text_from_field.dart';
 import 'package:flutter/material.dart';
@@ -13,150 +14,184 @@ class PharmacyScreen extends StatefulWidget {
 }
 
 class _PharmacyScreenState extends State<PharmacyScreen> {
-  List<MedicineModel> foundMedications = [];
-
-  bool _isSearching = false;
+  String _searchText = '';
+  final TextEditingController _searchController = TextEditingController();
 
   @override
-  void initState() {
-    foundMedications = allMedications;
-    super.initState();
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
-  void _runFilter(String enteredKeyword) {
-    List<MedicineModel> results = [];
-
-    setState(() {
-      _isSearching = enteredKeyword.isNotEmpty;
-    });
-
-    if (enteredKeyword.isEmpty) {
-      results = allMedications;
-    } else {
-      results = allMedications
-          .where(
-            (medicine) => medicine.name.toLowerCase().contains(
-              enteredKeyword.toLowerCase(),
-            ),
-          )
-          .toList();
+  // 2. دالة فلترة قائمة الأدوية حسب نص البحث
+  List<MedicineModel> _filterMedications(List<MedicineModel> list) {
+    if (_searchText.isEmpty) {
+      return []; // لا تعرض شيئًا في واجهة البحث إذا كان النص فارغًا
     }
-
-    setState(() {
-      foundMedications = results;
-    });
+    final lowerCaseQuery = _searchText.toLowerCase();
+    return list.where((medicine) {
+      // البحث بالاسم أو الاستخدام الرئيسي
+      return medicine.name.toLowerCase().contains(lowerCaseQuery) ||
+          medicine.mainUse.toLowerCase().contains(lowerCaseQuery);
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    // دمج القائمتين لفلترة البحث
+    final allProducts = [...allMedications, ...allNonMedicationProducts];
+
+    // تطبيق الفلترة
+    final filteredProducts = _filterMedications(allProducts);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'Pharmacy',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              CustomTextFormField(
-                hintText: 'Search Medication',
-                onChanged: (value) => _runFilter(value),
-                suffixIcon: Icon(Icons.search, color: AppColor.greenColor),
-              ),
-              if (!_isSearching) ...[
-                const SizedBox(height: 20),
-                Image.asset('assets/images/Screenshot 2025-11-20 190603.png'),
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: Column(
+          // نستخدم Column ثم ListView في الواجهات الداخلية
+          children: [
+            // حقل البحث
+            CustomTextFormField(
+              controller: _searchController,
+              hintText: 'Search medications',
+              suffixIcon: Icon(Icons.search, color: AppColor.greenColor),
+              onChanged: (value) {
+                setState(() {
+                  _searchText = value;
+                });
+              },
+            ),
+            const SizedBox(height: 10),
 
-                CustomRowSeeAllHomeScreen(
-                  title: 'Popular Products',
-                  onSeeAllTap: () {},
-                ),
-              ],
-              if (_isSearching) const SizedBox(height: 20),
-              _isSearching
-                  ? CustomGridViewMedicine(medicationList: foundMedications)
-                  : CustomListViewMedicine(medicationList: foundMedications),
-
-              const SizedBox(height: 20),
-            ],
-          ),
+            // 3. التحكم في عرض واجهة المستخدم
+            Expanded(
+              child: _searchText.isNotEmpty
+                  ? _buildSearchResults(filteredProducts)
+                  : _buildDefaultUI(),
+            ),
+          ],
         ),
       ),
     );
   }
-}
 
-class CustomListViewMedicine extends StatelessWidget {
-  final List<MedicineModel> medicationList;
-
-  const CustomListViewMedicine({super.key, required this.medicationList});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 165,
-      child: medicationList.isNotEmpty
-          ? ListView.separated(
-              separatorBuilder: (context, index) => const SizedBox(width: 12),
-              itemBuilder: (context, index) {
-                return CustomMedicineContainer(
-                  medicineModel: medicationList[index],
-                );
-              },
-              scrollDirection: Axis.horizontal,
-              itemCount: medicationList.length,
-            )
-          : const Center(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 40.0),
-                child: Text(
-                  'No matching medications found.',
-                  style: TextStyle(fontSize: 14, color: Colors.grey),
-                ),
-              ),
-            ),
+  // واجهة المستخدم الافتراضية (عندما يكون حقل البحث فارغًا)
+  Widget _buildDefaultUI() {
+    return ListView(
+      children: [
+        Image.asset('assets/images/Screenshot 2025-11-20 190603.png'),
+        CustomRowSeeAllHomeScreen(
+          title: 'Popular Medications',
+          onSeeAllTap: () {},
+        ),
+        CustomListViewMedicine(medicationList: allMedications),
+        CustomRowSeeAllHomeScreen(title: 'Other Products', onSeeAllTap: () {}),
+        CustomListViewMedicine(medicationList: allNonMedicationProducts),
+      ],
     );
   }
-}
 
-class CustomGridViewMedicine extends StatelessWidget {
-  final List<MedicineModel> medicationList;
+  Widget _buildSearchResults(List<MedicineModel> results) {
+    if (results.isEmpty) {
+      return const Center(
+        child: Text(
+          'No matching products or medications found.',
+          style: TextStyle(fontSize: 16, color: Colors.grey),
+        ),
+      );
+    }
 
-  const CustomGridViewMedicine({super.key, required this.medicationList});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
-      child: medicationList.isNotEmpty
-          ? GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 0.7,
+    return ListView.builder(
+      itemCount: results.length,
+      itemBuilder: (context, index) {
+        final product = results[index];
+        return Container(
+          margin: EdgeInsets.all(5),
+          width: double.infinity,
+          height: 120,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: AppColor.lightGreyColor2),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 100,
+                height: 120,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  image: DecorationImage(
+                    image: NetworkImage(product.imagePathNote),
+                  ),
+                ),
               ),
-              itemCount: medicationList.length,
-              itemBuilder: (context, index) {
-                return CustomMedicineContainer(
-                  medicineModel: medicationList[index],
-                  isGridView: true,
-                );
-              },
-            )
-          : const Padding(
-              padding: EdgeInsets.symmetric(vertical: 40.0),
-              child: Text(
-                'No search results found.',
-                style: TextStyle(fontSize: 14, color: Colors.grey),
+              SizedBox(width: 5),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          MedicineDetailsScreen(medicineModel: product),
+                    ),
+                  );
+                },
+                child: SizedBox(
+                  width: 227,
+                  height: 100,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        product.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w800,
+                          fontFamily: 'inter',
+                        ),
+                      ),
+                      Text(
+                        product.mainUse,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontFamily: 'inter',
+
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        product.quantityPcs,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'inter',
+                        ),
+                      ),
+                      Text(
+                        product.priceNote,
+                        style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'inter',
+                          color: AppColor.greenColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -99,15 +99,11 @@ class HospitalsDetailsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
-              borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(24),
-                bottomRight: Radius.circular(24),
-              ),
               child: Image.network(
                 hospital.imagePath,
                 width: double.infinity,
                 height: 280,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               ),
             ),
 

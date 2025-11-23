@@ -46,7 +46,7 @@ class _CustomMedicineContainerState extends State<CustomMedicineContainer> {
             children: [
               SizedBox(height: widget.isGridView ? 8 : 18),
 
-              Image.asset(
+              Image.network(
                 widget.medicineModel!.imagePathNote,
                 width: double.infinity,
                 height: 58,
@@ -55,6 +55,8 @@ class _CustomMedicineContainerState extends State<CustomMedicineContainer> {
               SizedBox(height: widget.isGridView ? 8 : 18),
               Text(
                 widget.medicineModel!.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
@@ -62,6 +64,8 @@ class _CustomMedicineContainerState extends State<CustomMedicineContainer> {
               ),
               Text(
                 widget.medicineModel!.quantityPcs,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(fontSize: 10, color: AppColor.darkGreyColor2),
               ),
               widget.isGridView ? const Spacer() : const SizedBox(height: 8),

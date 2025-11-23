@@ -57,7 +57,7 @@ class _MedicineDetailsScreenState extends State<MedicineDetailsScreen> {
             children: [
               Align(
                 alignment: Alignment.center,
-                child: Image.asset(
+                child: Image.network(
                   widget.medicineModel.imagePathNote,
                   width: 163,
                   height: 163,
@@ -107,6 +107,7 @@ class _MedicineDetailsScreenState extends State<MedicineDetailsScreen> {
                     widget.medicineModel.priceNote,
                     style: const TextStyle(
                       fontSize: 26,
+                      color: AppColor.greenColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

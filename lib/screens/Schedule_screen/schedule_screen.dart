@@ -126,16 +126,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'Schedule Screen',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Icon(Icons.schedule, color: AppColor.greenColor, size: 28),
-          ],
+        title: const Text(
+          'Schedule Screen',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
+        centerTitle: true,
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),

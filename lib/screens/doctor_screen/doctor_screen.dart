@@ -1,6 +1,7 @@
 import 'package:cure_link/models/doctors_details_model.dart';
 import 'package:cure_link/screens/doctor_details_screen/doctor_details_screen.dart';
 import 'package:cure_link/services/get_data_from_firebase_top_doctor.dart';
+import 'package:cure_link/utils/app_color.dart';
 import 'package:cure_link/widgets/custom_text_from_field.dart';
 import 'package:cure_link/widgets/custom_top_doctor_page_container.dart';
 import 'package:flutter/material.dart';
@@ -98,11 +99,12 @@ class _DoctorScreenState extends State<DoctorScreen> {
             padding: const EdgeInsets.all(10),
             child: CustomTextFormField(
               controller: _searchController,
+
               hintText: 'Search by Name or Specialty',
               onSaved: (p0) {},
               onFieldSubmitted: _onSearchSubmitted,
               suffixIcon: IconButton(
-                icon: const Icon(Icons.search),
+                icon: const Icon(Icons.search, color: AppColor.greenColor),
                 onPressed: () {
                   _onSearchSubmitted(_searchController.text);
                 },

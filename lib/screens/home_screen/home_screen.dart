@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(left: 20, right: 20, top: 35, bottom: 0),
+        padding: const EdgeInsets.only(left: 16, right: 16, top: 35, bottom: 0),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -40,13 +40,10 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20),
-              SizedBox(
-                height: 40,
-                child: CustomTextFormField(
-                  hintText: 'Search...',
-                  prefixIcon: Icon(Icons.search),
-                  onSaved: (p0) {},
-                ),
+              CustomTextFormField(
+                hintText: 'Search...',
+                suffixIcon: Icon(Icons.search, color: AppColor.greenColor),
+                onSaved: (p0) {},
               ),
               SizedBox(height: 12),
               CustomRowContainerSearch(),

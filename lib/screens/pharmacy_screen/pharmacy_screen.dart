@@ -112,38 +112,38 @@ class _PharmacyScreenState extends State<PharmacyScreen> {
       itemCount: results.length,
       itemBuilder: (context, index) {
         final product = results[index];
-        return Container(
-          margin: EdgeInsets.all(5),
-          width: double.infinity,
-          height: 120,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: AppColor.lightGreyColor2),
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: 100,
-                height: 120,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  image: DecorationImage(
-                    image: NetworkImage(product.imagePathNote),
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    MedicineDetailsScreen(medicineModel: product),
+              ),
+            );
+          },
+          child: Container(
+            margin: EdgeInsets.all(5),
+            width: double.infinity,
+            height: 120,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: AppColor.lightGreyColor2),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 100,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    image: DecorationImage(
+                      image: NetworkImage(product.imagePathNote),
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(width: 5),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          MedicineDetailsScreen(medicineModel: product),
-                    ),
-                  );
-                },
-                child: SizedBox(
+                SizedBox(width: 5),
+                SizedBox(
                   width: 227,
                   height: 100,
                   child: Column(
@@ -172,14 +172,13 @@ class _PharmacyScreenState extends State<PharmacyScreen> {
                       Text(
                         product.quantityPcs,
                         style: TextStyle(
-                          fontWeight: FontWeight.w500,
                           fontFamily: 'inter',
+                          color: AppColor.darkGreyColor2,
                         ),
                       ),
                       Text(
                         product.priceNote,
                         style: TextStyle(
-                          fontWeight: FontWeight.w500,
                           fontFamily: 'inter',
                           color: AppColor.greenColor,
                         ),
@@ -187,8 +186,8 @@ class _PharmacyScreenState extends State<PharmacyScreen> {
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },

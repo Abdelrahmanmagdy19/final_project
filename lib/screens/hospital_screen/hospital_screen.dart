@@ -103,6 +103,7 @@ class _HospitalScreenState extends State<HospitalScreen> {
               child: CustomTextFormField(
                 controller: _searchController,
                 hintText: 'Search hospitals by name or location',
+                suffixIcon: Icon(Icons.search, color: AppColor.greenColor),
                 onChanged: (v) {
                   setState(() {
                     _query = v.trim();

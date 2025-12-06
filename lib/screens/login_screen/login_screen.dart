@@ -153,7 +153,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     onTap: () {
                       FocusScope.of(context).unfocus();
                       if (formKey.currentState!.validate()) {
-                        // call cubit and wait for BlocListener to handle success/failure/navigation
                         BlocProvider.of<LoginSiginCubits>(
                           context,
                         ).loginWitheFirebase(

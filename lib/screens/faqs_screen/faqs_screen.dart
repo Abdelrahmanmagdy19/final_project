@@ -122,7 +122,6 @@ class _FaqsScreenState extends State<FaqsScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildFaqCard(FaqItem faq, int index) {
-    // find original index to attach key and for chip mapping
     final originalIndex = _allFaqs.indexOf(faq);
     return Container(
       key: _itemKeys[originalIndex],

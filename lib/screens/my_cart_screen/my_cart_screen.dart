@@ -212,12 +212,11 @@ class _MyCartScreenState extends State<MyCartScreen> {
                   Text(
                     item.medicine.quantityPcs,
                     style: TextStyle(color: AppColor.darkGreyColor2),
-                  ), // افتراضي
+                  ),
                 ],
               ),
             ),
 
-            // Quantity controls
             Container(
               decoration: BoxDecoration(
                 border: Border.all(

@@ -135,12 +135,11 @@ class _MedicineDetailsScreenState extends State<MedicineDetailsScreen> {
               ),
               const SizedBox(height: 10),
 
-              // **هنا تم التعديل لإضافة اللوجيك والانتقال**
               CustomButton(
                 text: 'Add to Cart',
                 buttonWidth: double.infinity,
                 buttonHeight: 50,
-                onTap: _addToCartAndNavigate, // Call the new method
+                onTap: _addToCartAndNavigate,
               ),
               const SizedBox(height: 20),
             ],

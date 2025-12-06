@@ -1,28 +1,24 @@
 import 'package:cure_link/models/hospital_model.dart';
 import 'package:cure_link/utils/app_color.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart'; // 🎯 تم استيراد المكتبة
+import 'package:url_launcher/url_launcher.dart';
 
 class HospitalsDetailsScreen extends StatelessWidget {
   final HospitalModel hospital;
 
   const HospitalsDetailsScreen({super.key, required this.hospital});
 
-  // 🎯 دالة لفتح الخريطة باستخدام الاسم والعنوان معًا
   Future<void> _launchMap(String query) async {
-    // بناء رابط بحث عالمي للخريطة (Google Maps URL scheme)
     final String url =
         'https://www.google.com/maps/search/?api=1&query=${Uri.encodeComponent(query)}';
 
     final uri = Uri.parse(url);
 
-    // محاولة تشغيل التطبيق الخارجي (الخريطة)
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $url');
     }
   }
 
-  // دالة مساعدة لإنشاء صف تفاصيل عصري
   Widget _buildDetailRow(
     BuildContext context,
     IconData icon,
@@ -160,7 +156,6 @@ class HospitalsDetailsScreen extends StatelessWidget {
 
                   const SizedBox(height: 16),
 
-                  // Description/About
                   const Text(
                     'Description',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

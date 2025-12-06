@@ -1,7 +1,7 @@
 import 'package:cure_link/cubits/favorites_cubits/favorites_cubits_.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_bloc/flutter_bloc.dart'; // <--- (1) استيراد البلوك
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cure_link/models/health_artilcle_model.dart';
 import 'package:cure_link/utils/app_color.dart';
 import 'package:cure_link/cubits/favorites_cubits/favorites_cubits_state.dart';
@@ -263,7 +263,6 @@ class _HealthArticleDetailsState extends State<HealthArticleDetails> {
       "${date.year}";
 
   String _cleanContent(String content) {
-    // إزالة الجزء [+xxxx chars] لو موجود
     final regex = RegExp(r'\[\+\d+\s*chars\]');
     return content.replaceAll(regex, '').trim();
   }

@@ -23,14 +23,12 @@ class _PharmacyScreenState extends State<PharmacyScreen> {
     super.dispose();
   }
 
-  // 2. دالة فلترة قائمة الأدوية حسب نص البحث
   List<MedicineModel> _filterMedications(List<MedicineModel> list) {
     if (_searchText.isEmpty) {
-      return []; // لا تعرض شيئًا في واجهة البحث إذا كان النص فارغًا
+      return [];
     }
     final lowerCaseQuery = _searchText.toLowerCase();
     return list.where((medicine) {
-      // البحث بالاسم أو الاستخدام الرئيسي
       return medicine.name.toLowerCase().contains(lowerCaseQuery) ||
           medicine.mainUse.toLowerCase().contains(lowerCaseQuery);
     }).toList();
@@ -38,10 +36,8 @@ class _PharmacyScreenState extends State<PharmacyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // دمج القائمتين لفلترة البحث
     final allProducts = [...allMedications, ...allNonMedicationProducts];
 
-    // تطبيق الفلترة
     final filteredProducts = _filterMedications(allProducts);
 
     return Scaffold(
@@ -55,9 +51,7 @@ class _PharmacyScreenState extends State<PharmacyScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Column(
-          // نستخدم Column ثم ListView في الواجهات الداخلية
           children: [
-            // حقل البحث
             CustomTextFormField(
               controller: _searchController,
               hintText: 'Search medications',
@@ -70,7 +64,6 @@ class _PharmacyScreenState extends State<PharmacyScreen> {
             ),
             const SizedBox(height: 10),
 
-            // 3. التحكم في عرض واجهة المستخدم
             Expanded(
               child: _searchText.isNotEmpty
                   ? _buildSearchResults(filteredProducts)
@@ -82,7 +75,6 @@ class _PharmacyScreenState extends State<PharmacyScreen> {
     );
   }
 
-  // واجهة المستخدم الافتراضية (عندما يكون حقل البحث فارغًا)
   Widget _buildDefaultUI() {
     return ListView(
       children: [

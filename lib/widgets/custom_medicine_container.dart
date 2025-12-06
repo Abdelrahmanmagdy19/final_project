@@ -79,7 +79,6 @@ class _CustomMedicineContainerState extends State<CustomMedicineContainer> {
                     ),
                   ),
                   const Spacer(),
-                  // Add to cart icon
                   GestureDetector(
                     onTap: () {
                       Navigator.push(

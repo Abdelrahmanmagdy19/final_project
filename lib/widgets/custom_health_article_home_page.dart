@@ -15,7 +15,6 @@ class CustomHealthArticleHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigate to details page
         Navigator.push(
           context,
           MaterialPageRoute(

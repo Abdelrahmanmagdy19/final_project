@@ -38,7 +38,6 @@ class _HealthArticleScreenState extends State<HealthArticleScreen> {
     if (refresh) {
       currentPage = 1;
       hasMore = true;
-      // المقالات القديمة ستظل موجودة أثناء التحميل لتجنب وميض الشاشة
     }
 
     setState(() => isLoading = true);

@@ -44,7 +44,6 @@ class _CustomListViewSeparatedDayState
           ? ''
           : nextSevenDays[index]['fullDayString'];
 
-      // إرسال القيمة المختارة للأب
       widget.onDaySelected(selectedDayString ?? '');
     });
   }

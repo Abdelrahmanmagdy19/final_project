@@ -78,7 +78,6 @@ class HomeScreen extends StatelessWidget {
                   );
                 },
               ),
-              //Health article section
               CustomListViewHealthArticle(),
             ],
           ),

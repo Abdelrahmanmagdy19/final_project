@@ -33,7 +33,7 @@ class _CustomListViewHealthArticleState
       final newArticles = await HealthArticleService().fetchHealthArticles(
         page: currentPage,
       );
-      if (!mounted) return; // guard against setState after dispose
+      if (!mounted) return;
       setState(() {
         healthArticles.addAll(newArticles);
         currentPage++;

@@ -2,7 +2,7 @@ import 'package:cure_link/cubits/favorites_cubits/favorites_cubits_.dart';
 import 'package:cure_link/firebase_options.dart';
 import 'package:cure_link/cubits/login_sigin_cubits/login_sigin_cubits.dart';
 import 'package:cure_link/cubits/profile_cubits/profile_cubit.dart';
-import 'package:cure_link/screens/home_onboarding_screen/home_boarding_screen.dart';
+import 'package:cure_link/screens/splash_screen/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,9 +27,6 @@ class CureLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomeOnBoardingScreen(),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: SplashScreen());
   }
 }

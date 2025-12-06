@@ -7,7 +7,7 @@ class DoctorsDetailsModel {
   final String? about;
   final String? price;
   final String? email;
-  final String? uid; // إضافة معرف فريد للطبيب
+  final String? uid;
 
   DoctorsDetailsModel({
     this.image,

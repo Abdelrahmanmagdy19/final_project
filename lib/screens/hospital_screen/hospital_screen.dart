@@ -15,7 +15,6 @@ class _HospitalScreenState extends State<HospitalScreen> {
   final ScrollController _controller = ScrollController();
   final List<HospitalModel> _allHospitals = HospitalModel.famousHospitals;
 
-  // Pagination variables
   final int _pageSize = 5;
   int _currentMax = 5;
   bool _isLoadingMore = false;
@@ -26,7 +25,6 @@ class _HospitalScreenState extends State<HospitalScreen> {
   @override
   void initState() {
     super.initState();
-    // Initialize visible count
     _currentMax = _pageSize.clamp(0, _allHospitals.length);
     _controller.addListener(_onScroll);
   }
@@ -39,9 +37,7 @@ class _HospitalScreenState extends State<HospitalScreen> {
     super.dispose();
   }
 
-  // --- Pagination Logic ---
   void _onScroll() {
-    // Check if user is 200 pixels from the bottom AND not currently loading
     if (_controller.position.pixels >=
             _controller.position.maxScrollExtent - 200 &&
         !_isLoadingMore &&
@@ -52,11 +48,8 @@ class _HospitalScreenState extends State<HospitalScreen> {
 
   void _loadMore() async {
     setState(() => _isLoadingMore = true);
-    await Future.delayed(
-      const Duration(milliseconds: 500),
-    ); // Simulate network delay
+    await Future.delayed(const Duration(milliseconds: 500));
     setState(() {
-      // Increase _currentMax, clamped by the filtered list size
       _currentMax = (_currentMax + _pageSize).clamp(
         0,
         _filteredHospitals.length,
@@ -64,9 +57,7 @@ class _HospitalScreenState extends State<HospitalScreen> {
       _isLoadingMore = false;
     });
   }
-  // --- End Pagination Logic ---
 
-  // --- Search Filter Logic ---
   List<HospitalModel> get _filteredHospitals {
     if (_query.isEmpty) return _allHospitals;
     final q = _query.toLowerCase();
@@ -79,7 +70,6 @@ class _HospitalScreenState extends State<HospitalScreen> {
         )
         .toList();
   }
-  // --- End Search Filter Logic ---
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +87,6 @@ class _HospitalScreenState extends State<HospitalScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Search Bar
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: CustomTextFormField(
@@ -120,11 +109,9 @@ class _HospitalScreenState extends State<HospitalScreen> {
                   horizontal: 16,
                   vertical: 8,
                 ),
-                // Add 1 to itemCount to show the loading indicator if loading more
                 itemCount: displayCount + (_isLoadingMore ? 1 : 0),
                 itemBuilder: (context, index) {
                   if (index >= displayCount) {
-                    // Loading Indicator
                     return const Padding(
                       padding: EdgeInsets.symmetric(vertical: 16),
                       child: Center(child: CircularProgressIndicator()),
@@ -140,7 +127,6 @@ class _HospitalScreenState extends State<HospitalScreen> {
                 },
               ),
             ),
-            // Show a message if the list is empty after filtering
             if (list.isEmpty && _query.isNotEmpty)
               const Padding(
                 padding: EdgeInsets.all(32.0),
@@ -218,7 +204,6 @@ class CustomContainerHospital extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      // Name
                       Text(
                         hospitalModel.name,
                         maxLines: 1,
@@ -239,7 +224,6 @@ class CustomContainerHospital extends StatelessWidget {
                         ),
                       ),
 
-                      // Location
                       Row(
                         children: [
                           Icon(

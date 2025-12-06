@@ -43,7 +43,6 @@ class LoginSiginCubits extends Cubit<LoginSiginCubitsState> {
     emit(LoginSiginCubitsLoading());
 
     try {
-      // 1. Create user in Firebase Authentication
       final userCredential = await _auth.createUserWithEmailAndPassword(
         email: email.trim(),
         password: password,
@@ -52,10 +51,8 @@ class LoginSiginCubits extends Cubit<LoginSiginCubitsState> {
       final user = userCredential.user;
 
       if (user != null) {
-        // 2. Update display name in Firebase Auth
         await user.updateDisplayName(name);
 
-        // 3. Prepare data and save to appropriate Firestore Collection
         try {
           Map<String, dynamic> baseData = {
             'uid': user.uid,
@@ -86,7 +83,6 @@ class LoginSiginCubits extends Cubit<LoginSiginCubitsState> {
           } else if (role == 'hospital') {
             collectionPath = 'hospitals';
           } else {
-            // Default to 'users' collection for regular users
             collectionPath = 'users';
           }
 
@@ -95,7 +91,6 @@ class LoginSiginCubits extends Cubit<LoginSiginCubitsState> {
               .doc(user.uid)
               .set(baseData);
         } catch (e) {
-          // If Firestore write fails, delete the Auth user
           await user.delete();
           emit(
             LoginSiginCubitsFailure(
@@ -114,10 +109,8 @@ class LoginSiginCubits extends Cubit<LoginSiginCubitsState> {
         );
       }
     } on FirebaseAuthException catch (e) {
-      // Handle Authentication errors (e.g., email already in use)
       emit(LoginSiginCubitsFailure(e.message ?? 'Registration error'));
     } catch (e) {
-      // Handle general errors
       emit(LoginSiginCubitsFailure('Registration failed: ${e.toString()}'));
     }
   }

@@ -134,11 +134,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(height: 8),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      'Forgot Password?',
-                      style: TextStyle(color: AppColor.greenColor),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ForgotPasswordScreen(),
+                        ),
+                      );
+                    },
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Text(
+                        'Forgot Password?',
+                        style: TextStyle(color: AppColor.greenColor),
+                      ),
                     ),
                   ),
                   SizedBox(height: 20),
@@ -149,7 +159,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     onTap: () {
                       FocusScope.of(context).unfocus();
                       if (formKey.currentState!.validate()) {
-                        // call cubit and wait for BlocListener to handle success/failure/navigation
                         BlocProvider.of<LoginSiginCubits>(
                           context,
                         ).loginWitheFirebase(

@@ -79,31 +79,53 @@ class ProfileScreen extends StatelessWidget {
                         CustomRowProfileScreen(
                           iconData: Icons.favorite_border,
                           title: 'Favorites',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FavoritesScreen(),
+                              ),
+                            );
+                          },
                         ),
                         const CustomDivider(),
                         CustomRowProfileScreen(
-                          iconData: Icons.calendar_today_outlined,
-                          title: 'Appointment',
-                          onTap: () {},
+                          iconData: Icons.schedule_outlined,
+                          title: 'Schedule',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ScheduleScreen(),
+                              ),
+                            );
+                          },
                         ),
                         const CustomDivider(),
                         CustomRowProfileScreen(
-                          iconData: Icons.payment_outlined,
-                          title: 'Payment Methods',
-                          onTap: () {},
+                          iconData: Icons.shopping_bag_outlined,
+                          title: 'My Cart',
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MyCartScreen(),
+                              ),
+                            );
+                          },
                         ),
                         const CustomDivider(),
                         CustomRowProfileScreen(
                           iconData: Icons.help_outline,
                           title: 'FAQs',
-                          onTap: () {},
-                        ),
-                        const CustomDivider(),
-                        CustomRowProfileScreen(
-                          iconData: Icons.settings_outlined,
-                          title: 'Settings',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FaqsScreen(),
+                              ),
+                            );
+                          },
                         ),
                         const CustomDivider(),
                         CustomRowProfileScreen(
@@ -113,13 +135,10 @@ class ProfileScreen extends StatelessWidget {
                             final route = MaterialPageRoute(
                               builder: (context) => const LetsGetStarted(),
                             );
-
                             await context.read<ProfileCubit>().logout();
-
                             if (!context.mounted) {
                               return;
                             }
-
                             Navigator.pushReplacement(context, route);
                           },
                           backgroundColor: Colors.red.shade100,

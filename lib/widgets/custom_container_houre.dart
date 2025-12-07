@@ -17,7 +17,6 @@ class CustomContainerHoure extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // تم إصلاح استخدام withValues الخاطئ
     Color fadeColor = AppColor.greyColor.withValues(alpha: 0.3);
 
     Color borderColor = isAvailable

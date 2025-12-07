@@ -104,12 +104,10 @@ class _AiChatPageState extends State<AiChatPage> {
     if (rawText.isEmpty && imageForMessage == null) return;
 
     final bool messageIsArabic = _containsArabic(rawText);
-    // ensure AI responds in Arabic when user writes Arabic
     final String prompt = messageIsArabic
         ? 'الرجاء الرد باللغة العربية:\n$rawText'
         : rawText;
 
-    // optimistic UI: add user message and remove preview immediately (WhatsApp behavior)
     setState(() {
       _messages.add({
         'text': rawText.isNotEmpty ? rawText : '[Image]',
@@ -122,7 +120,7 @@ class _AiChatPageState extends State<AiChatPage> {
       } else {
         _controller.clear();
       }
-      _selectedImage = null; // hide preview immediately
+      _selectedImage = null;
       _inputIsArabic = false;
     });
 
@@ -380,8 +378,9 @@ class _AiChatPageState extends State<AiChatPage> {
               padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
               itemCount: _messages.length + (_isTyping ? 1 : 0),
               itemBuilder: (context, index) {
-                if (_isTyping && index == _messages.length)
+                if (_isTyping && index == _messages.length) {
                   return _buildTyping();
+                }
                 final m = _messages[index];
                 return _buildBubble(
                   m['text'] as String?,

@@ -12,6 +12,7 @@ void main() async {
   runApp(
     MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => FavoritesCubits()),
         BlocProvider(create: (context) => LoginSiginCubits()),
         BlocProvider(create: (context) => ProfileCubit()),
       ],

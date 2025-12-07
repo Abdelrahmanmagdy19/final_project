@@ -1,3 +1,6 @@
+import 'package:cure_link/screens/doctor_screen/doctor_screen.dart';
+import 'package:cure_link/screens/hospital_screen/hospital_screen.dart';
+import 'package:cure_link/screens/pharmacy_screen/pharmacy_screen.dart';
 import 'package:cure_link/utils/app_color.dart';
 import 'package:cure_link/utils/app_icons.dart';
 import 'package:cure_link/widgets/custom_container_search.dart';
@@ -15,6 +18,12 @@ class CustomRowContainerSearch extends StatelessWidget {
         CustomContainerSearch(
           icons: SvgPicture.asset(AppIcons.doctor, fit: BoxFit.none),
           title: 'Doctor',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DoctorScreen()),
+            );
+          },
         ),
         SizedBox(width: 16),
         CustomContainerSearch(
@@ -23,11 +32,19 @@ class CustomRowContainerSearch extends StatelessWidget {
             color: AppColor.greenColor,
           ),
           title: 'pharmacy',
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PharmacyScreen()),
+          ),
         ),
         SizedBox(width: 16),
         CustomContainerSearch(
           icons: Icon(Icons.local_hospital, color: AppColor.greenColor),
           title: 'Hospital',
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HospitalScreen()),
+          ),
         ),
       ],
     );

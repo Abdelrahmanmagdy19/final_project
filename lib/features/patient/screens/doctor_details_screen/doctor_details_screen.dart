@@ -1,6 +1,6 @@
 import 'package:cure_link/features/patient/models/booking_data.dart';
 import 'package:cure_link/shared/models/doctors_details_model.dart';
-import 'package:cure_link/features/patient/screens/appointment_screens/appointment_screens.dart';
+import 'package:cure_link/features/patient/screens/appointment_screens/appointment_screens.dart' show AppointmentScreens;
 import 'package:cure_link/widgets/custom_bottom.dart';
 import 'package:cure_link/widgets/custom_divider.dart';
 import 'package:cure_link/widgets/custom_hours_list_view.dart';
@@ -52,7 +52,7 @@ class _DoctorDetailsScreenState extends State<DoctorDetailsScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AppointmentScreen(
+        builder: (context) => AppointmentScreens(
           doctor: widget.doctor!,
           bookingDetails: _bookingData,
         ),

@@ -95,7 +95,7 @@ class _HospitalScreenState extends State<HospitalScreen> {
                 suffixIcon: Icon(Icons.search, color: AppColor.greenColor),
                 onChanged: (v) {
                   setState(() {
-                    _query = v.trim();
+                    _query = v?.trim() ?? '';
                     _currentMax = _pageSize.clamp(0, _filteredHospitals.length);
                   });
                 },

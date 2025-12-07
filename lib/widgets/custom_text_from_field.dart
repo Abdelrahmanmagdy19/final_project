@@ -16,7 +16,6 @@ class CustomTextFormField extends StatelessWidget {
     this.onSaved,
     this.keyboardType,
     this.textInputType,
-    this.onChanged,
   });
   final String hintText;
   final TextEditingController? controller;

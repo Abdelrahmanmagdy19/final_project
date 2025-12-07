@@ -1,5 +1,6 @@
-import 'package:cure_link/models/cubits/top_doctor_cubit/top_doctor_cubit.dart';
+import 'package:cure_link/cubits/top_doctor_cubit/top_doctor_cubit.dart';
 import 'package:cure_link/features/patient/screens/top_doctor_screen/top_doctor_screen.dart';
+import 'package:cure_link/screens/health_article_screen/health_arricle_screen.dart';
 import 'package:cure_link/utils/app_color.dart';
 import 'package:cure_link/utils/app_images.dart';
 import 'package:cure_link/widgets/custom_list_view_health_article.dart';

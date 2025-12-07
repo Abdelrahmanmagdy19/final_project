@@ -1,7 +1,7 @@
 import 'package:cure_link/features/doctor/screens/doctor_dashboard_shell.dart';
 import 'package:cure_link/features/patient/screens/login_screen/login_screen.dart';
-import 'package:cure_link/models/cubits/login_sigin_cubits/login_sigin_cubits.dart';
-import 'package:cure_link/models/cubits/login_sigin_cubits/login_sigin_cubits_state.dart';
+import 'package:cure_link/cubits/login_sigin_cubits/login_sigin_cubits.dart';
+import 'package:cure_link/cubits/login_sigin_cubits/login_sigin_cubits_state.dart';
 import 'package:cure_link/utils/app_color.dart';
 import 'package:cure_link/utils/app_validation.dart';
 import 'package:cure_link/widgets/custom_bottom.dart';

@@ -3,7 +3,7 @@ import 'package:cure_link/features/doctor/screens/doctor_queue_screen.dart';
 import 'package:cure_link/features/doctor/screens/doctor_prescriptions_screen.dart';
 import 'package:cure_link/features/doctor/services/doctor_repository.dart';
 import 'package:cure_link/features/patient/screens/lets_get_started_screen/lets_get_started_screen.dart';
-import 'package:cure_link/models/cubits/profile_cubits/profile_cubit.dart';
+import 'package:cure_link/cubits/profile_cubits/profile_cubit.dart';
 import 'package:cure_link/utils/app_color.dart';
 import 'package:cure_link/widgets/custom_divider.dart';
 import 'package:cure_link/widgets/custom_row_profile_screen.dart';

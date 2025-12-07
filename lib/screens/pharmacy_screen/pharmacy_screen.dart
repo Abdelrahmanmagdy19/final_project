@@ -58,7 +58,7 @@ class _PharmacyScreenState extends State<PharmacyScreen> {
               suffixIcon: Icon(Icons.search, color: AppColor.greenColor),
               onChanged: (value) {
                 setState(() {
-                  _searchText = value;
+                  _searchText = value ?? '';
                 });
               },
             ),

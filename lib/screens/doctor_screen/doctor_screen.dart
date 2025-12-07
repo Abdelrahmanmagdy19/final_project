@@ -1,5 +1,5 @@
-import 'package:cure_link/models/doctors_details_model.dart';
-import 'package:cure_link/screens/doctor_details_screen/doctor_details_screen.dart';
+import 'package:cure_link/shared/models/doctors_details_model.dart';
+import 'package:cure_link/features/patient/screens/doctor_details_screen/doctor_details_screen.dart';
 import 'package:cure_link/services/get_data_from_firebase_top_doctor.dart';
 import 'package:cure_link/utils/app_color.dart';
 import 'package:cure_link/widgets/custom_text_from_field.dart';

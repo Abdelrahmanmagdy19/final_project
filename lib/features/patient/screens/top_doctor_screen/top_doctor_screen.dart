@@ -1,5 +1,5 @@
-import 'package:cure_link/models/cubits/top_doctor_cubit/top_doctor_cubit.dart';
-import 'package:cure_link/models/cubits/top_doctor_cubit/top_doctor_cubit_state.dart';
+import 'package:cure_link/cubits/top_doctor_cubit/top_doctor_cubit.dart';
+import 'package:cure_link/cubits/top_doctor_cubit/top_doctor_cubit_state.dart';
 import 'package:cure_link/shared/models/doctors_details_model.dart';
 import 'package:cure_link/features/patient/screens/doctor_details_screen/doctor_details_screen.dart';
 import 'package:cure_link/widgets/custom_top_doctor_page_container.dart';

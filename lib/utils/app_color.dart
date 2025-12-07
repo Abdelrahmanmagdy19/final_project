@@ -4,7 +4,10 @@ class AppColor {
   static const Color greenColor = Color(0xff19988C);
   static const Color lightGreenColor = Color(0xFFE8F3F1);
   static const Color darkGreyColor = Color(0xFFADADAD);
+  static const Color darkGreyColor2 = Color(0xFFADADAD);
   static const Color greyColor = Color(0xFFBDBDBD);
   static const Color grey2Color = Color(0xFFF9FAFB);
+  static const Color lightGreyColor = Color(0xFFF5F5F5);
+  static const Color lightGreyColor2 = Color(0xFFF5F5F5);
 
 }
